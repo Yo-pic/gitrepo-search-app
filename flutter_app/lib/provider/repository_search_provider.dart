@@ -17,11 +17,15 @@ class RepositorySearchProvider with ChangeNotifier {
   Future<void> searchRepositories(String keyword) async {
     final url = Uri.https('api.github.com', '/search/repositories', {'q': keyword});
     final response = await http.get(url);
+    int statuscode = response.statusCode;
     List<RepositoryModel> results = [];
 
-    if (response.statusCode == 200) {
+    if (statuscode == 200) {
       final data = json.decode(response.body);
       results = _parseRepositories(data);
+    }
+    else{
+      throw Exception('Failed to get response. error code is $statuscode\n');
     }
 
     _searchResults = results;
@@ -29,7 +33,7 @@ class RepositorySearchProvider with ChangeNotifier {
   }
 
   // apiによって返された結果をParseする。
-  // data: apiに返されたデータの本文
+  // data: apiにより返されたデータの本文
   List<RepositoryModel> _parseRepositories(dynamic data) {
     List<RepositoryModel> results = [];
 
