@@ -42,6 +42,24 @@ class SearchPage extends StatelessWidget {
     );
   }
 
+  Widget repositoryList({required RepositorySearchProvider searchProvider}){
+    return Expanded(
+      child: ListView.separated(
+        padding: const EdgeInsets.all(16),
+        itemCount: searchProvider.searchResults.length,
+        itemBuilder: (BuildContext context, int index) {
+          return repositoryListItem(
+              repositoryModel: searchProvider.searchResults[index]);
+        },
+        separatorBuilder: (context, index) {
+          return const SizedBox(
+            height: 8,
+          );
+        },
+      ),
+    );
+  }
+
   Widget repositoryListItem({required RepositoryModel repositoryModel}) {
     return Material(
       elevation: 8,
@@ -124,6 +142,31 @@ class SearchPage extends StatelessWidget {
     );
   }
 
+  Widget notFoundRepositoryReport(){
+    return Container(
+      width: double.infinity,
+      height: double.infinity,
+      alignment: Alignment.center,
+      child: const Text(
+        'Repositories are not found for the keywords.',
+        style: TextStyle(
+          fontSize: 24,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
+
+  Widget branchScreenOutput({required int reposum, required RepositorySearchProvider searchProvider}){
+    if(reposum == 0){
+      return notFoundRepositoryReport();
+    }
+    else{
+      return repositoryList(searchProvider: searchProvider);
+    }
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -144,41 +187,9 @@ class SearchPage extends StatelessWidget {
           return Column(
             children: [
               searchBar(searchProvider),
-
-              /*
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: TextField(
-                  controller: searchProvider.searchController,
-                  decoration: const InputDecoration(
-                    labelText: 'Keyword',
-                  ),
-                ),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  searchProvider
-                      .searchRepositories(searchProvider.searchController.text);
-                },
-                child: const Text('Search'),
-              ),
-
-               */
-
-              Expanded(
-                child: ListView.separated(
-                  padding: const EdgeInsets.all(16),
-                  itemCount: searchProvider.searchResults.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return repositoryListItem(
-                        repositoryModel: searchProvider.searchResults[index]);
-                  },
-                  separatorBuilder: (context, index) {
-                    return const SizedBox(
-                      height: 8,
-                    );
-                  },
-                ),
+              branchScreenOutput(
+                  reposum: searchProvider.searchResults.length,
+                  searchProvider: searchProvider
               ),
             ],
           );
