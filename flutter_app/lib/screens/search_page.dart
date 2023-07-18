@@ -1,18 +1,130 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/model/repository_model.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_app/provider/repository_search_provider.dart';
-
 class SearchPage extends StatelessWidget {
-  @override
+
+  Widget repositoryListItem({required RepositoryModel repositoryModel}){
+    return Material(
+      elevation: 8,
+      borderRadius: BorderRadius.circular(20),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Container(
+          width: 360,
+          height: 96,
+          /*
+          decoration: BoxDecoration(
+            border: Border(
+              bottom: BorderSide(
+                color: Colors.black.withOpacity(0.12),
+              )
+            ),
+          ),
+
+           */
+          child: Row(
+            // 垂直方向左寄り
+            mainAxisAlignment: MainAxisAlignment.start,
+            // 水平方向左寄り
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                height: 48,
+                width: 48,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: NetworkImage(repositoryModel.ownerIconUrl),
+                  ),
+                  border: Border.all(color: Colors.black12, width: 1),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      height: 48,
+                      child: Text(
+                        repositoryModel.name,
+                        style: const TextStyle(
+                            fontSize: 18
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Row(
+                      children: [
+                        _repositoryListItemInfo(
+                            icon: Icons.star_rounded,
+                            infoValue: repositoryModel.stars.toString()
+                        ),
+                        const SizedBox(width: 16),
+                        _repositoryListItemInfo(
+                            icon: Icons.visibility_rounded,
+                            infoValue: repositoryModel.watchers.toString()
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  // リストタイル下部
+  Widget _repositoryListItemInfo({
+    required IconData icon,
+    required String infoValue
+  }) {
+    return Row(
+      children: [
+        Icon(
+            icon,
+            color: Colors.black26,
+        ),
+        const SizedBox(width: 4),
+
+        Text(
+            infoValue,
+            style: const TextStyle(
+              color: Colors.black26,
+              fontSize: 10,
+            ),
+        ),
+      ],
+    );
+  }
+
+@override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xffebf9ff),
       appBar: AppBar(
-        title: Text('GitHub Repository Search'),
+        centerTitle: true,
+        elevation: 0.0,
+        title: Text(
+            'GitHub Repository Search',
+          style: TextStyle(
+            color: Colors.black.withOpacity(0.85),
+
+          ),
+        ),
+        backgroundColor: Color(0xffebf9ff),
       ),
       body: Consumer<RepositorySearchProvider>(
         builder: (context, searchProvider, _) {
           return Column(
             children: [
+              //searchBar(searchProvider),
+
               Padding(
                 padding: EdgeInsets.all(16.0),
                 child: TextField(
@@ -28,15 +140,17 @@ class SearchPage extends StatelessWidget {
                 },
                 child: Text('Search'),
               ),
+
               Expanded(
-                child: ListView.builder(
+                child: ListView.separated(
+                  padding: const EdgeInsets.all(16),
                   itemCount: searchProvider.searchResults.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return ListTile(
-                      title: Text(searchProvider.searchResults[index].name),
-                      onTap: () {
-                       // ここに詳細ページへの遷移を記載する。
-                      },
+                    return repositoryListItem(repositoryModel: searchProvider.searchResults[index]);
+                  },
+                  separatorBuilder: (context, index) {
+                    return const SizedBox(
+                      height: 8,
                     );
                   },
                 ),
