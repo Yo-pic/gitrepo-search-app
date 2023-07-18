@@ -4,12 +4,8 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class RepositorySearchProvider with ChangeNotifier {
-  // 検索欄のキーワードを取得するためのコントローラー
-  TextEditingController _searchController = TextEditingController();
   // apiによる検索結果を保持しておくリスト
   List<RepositoryModel> _searchResults = [];
-
-  TextEditingController get searchController => _searchController;
   List<RepositoryModel> get searchResults => _searchResults;
 
   // GitHub apiを用いてレポジトリをキーワード検索する
