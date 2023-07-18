@@ -143,15 +143,18 @@ class SearchPage extends StatelessWidget {
   }
 
   Widget notFoundRepositoryReport(){
-    return Container(
-      width: double.infinity,
-      height: double.infinity,
-      alignment: Alignment.center,
-      child: const Text(
-        'Repositories are not found for the keywords.',
-        style: TextStyle(
-          fontSize: 24,
-          fontWeight: FontWeight.bold,
+    return Expanded(
+      child: Padding(
+        padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+        child: Container(
+          alignment: Alignment.center,
+          child: const Text(
+            'Repositories are not found for the keywords.',
+            style: TextStyle(
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ),
       ),
     );
