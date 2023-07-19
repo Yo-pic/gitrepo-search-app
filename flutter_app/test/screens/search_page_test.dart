@@ -25,6 +25,7 @@ void main() {
         watchers: 50,
         forks: 30,
         issues: 10,
+        url: 'https://github.com/octocat',
       ),
     ];
 
@@ -71,6 +72,7 @@ class MockRepositorySearchProvider extends RepositorySearchProvider {
         watchers: 50,
         forks: 30,
         issues: 10,
+        url: 'https://github.com/octocat',
       ),
     ];
     isSearched = true;
