@@ -1,28 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/model/repository_model.dart';
+import 'package:flutter_app/screens/detail_page.dart';
 import 'package:flutter_app/provider/repository_listitem_provider.dart';
 import 'package:provider/provider.dart';
 
 
-/// レポジトリリストの子要素
+/// レポジトリリストの子要素を作成する
 class RepositoryListItem extends StatelessWidget{
   final RepositoryModel repositoryModel;
-  const RepositoryListItem({required this.repositoryModel});
+  double? _deviceWidth, _deviceHeight;
+
+  RepositoryListItem({required this.repositoryModel});
 
   @override
   Widget build(BuildContext context) {
+    _deviceWidth = MediaQuery.of(context).size.width;
+    _deviceHeight = MediaQuery.of(context).size.height;
     return ChangeNotifierProvider<RepositoryListItemProvider>(
       create: (_) => RepositoryListItemProvider(),
       child: Consumer<RepositoryListItemProvider>(
         builder: (context, listItemProvider, _) {
-          return _buildListItem(listItemProvider);
+          return _buildListItem(listItemProvider, context);
         },
       ),
     );
   }
 
-  Widget _buildListItem(RepositoryListItemProvider listItemProvider){
-
+  Widget _buildListItem(RepositoryListItemProvider listItemProvider, BuildContext context) {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTapDown: (_) {
@@ -32,13 +36,10 @@ class RepositoryListItem extends StatelessWidget{
         listItemProvider.notPressingListItem();
       },
       onTap: (){
-        // 予定
-        /*
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => DetailPage(repository: searchProvider.searchResults[index]),),);
-
-         */
-        print(repositoryModel.name + ' is onTap');
+            context,
+            MaterialPageRoute(
+            builder: (context) => DetailPage(repository: repositoryModel),),);
       },
       onTapCancel: () {
         listItemProvider.notPressingListItem();
@@ -63,8 +64,10 @@ class RepositoryListItem extends StatelessWidget{
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Container(
-          width: 360,
-          height: 96,
+          // 360くらい
+          width: _deviceWidth! * 0.92,
+          // 96くらい
+          height: _deviceHeight! * 0.13,
           child: Row(
             // 垂直方向左寄り
             mainAxisAlignment: MainAxisAlignment.start,
@@ -83,10 +86,12 @@ class RepositoryListItem extends StatelessWidget{
 
   /// OwnerIcon窓のwidget
   Widget _ownerImage(RepositoryModel repositoryModel) {
+    // length: Icon窓の一辺の長さ
     // repositoryModel: 検索結果
     return Container(
-      height: 48,
-      width: 48,
+      // 48くらい
+      height: _deviceWidth! * 0.12,
+      width: _deviceWidth! * 0.12,
       decoration: BoxDecoration(
         image: DecorationImage(
           image: NetworkImage(repositoryModel.ownerIconUrl),
@@ -106,7 +111,8 @@ class RepositoryListItem extends StatelessWidget{
         children: [
           Container(
             alignment: Alignment.centerLeft,
-            height: 48,
+            // 48くらい
+            height: _deviceWidth! * 0.12,
             child: Text(
               repositoryModel.name,
               style: const TextStyle(fontSize: 18),

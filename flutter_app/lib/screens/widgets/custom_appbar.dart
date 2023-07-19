@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+/// Appbarコンポーネント
+/// 基本はこのコンポーネントを使用する
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget{
   final String title;
 
@@ -15,9 +17,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget{
       elevation: 0.0,
       title: Text(
         title,
-        style: TextStyle(
-          color: Colors.black.withOpacity(0.85),
+        style: const TextStyle(
+          color: Colors.black54,
         ),
+      ),
+      iconTheme: const IconThemeData(
+        color: Colors.black54,
       ),
       backgroundColor: const Color(0xffebf9ff),
     );

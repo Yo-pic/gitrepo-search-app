@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/provider/repository_search_provider.dart';
 
+/// カスタムされたサーチバーコンポーネント
 class SearchBar extends StatelessWidget{
   final RepositorySearchProvider searchProvider;
 

@@ -3,6 +3,12 @@ import 'package:flutter_app/model/repository_model.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+/// api検索用provider
+/// GitHub apiを用いてレポジトリをキーワード検索する
+/// * [statuscode]が200なら検索結果をまとめて確保し渡す。
+/// * [statuscode]が200以外、または検索結果が0の場合、空の配列を渡す
+///
+///
 class RepositorySearchProvider with ChangeNotifier {
   // apiによる検索結果を保持しておくリスト
   List<RepositoryModel> _searchResults = [];
@@ -17,12 +23,16 @@ class RepositorySearchProvider with ChangeNotifier {
   set isSearched(bool value) {
     _isSearched = value;
   }
-  // GitHub apiを用いてレポジトリをキーワード検索する
-  // keyword: 検索欄に入力したキーワード
+
   Future<void> searchRepositories(String keyword) async {
+    // keyword: 検索欄に入力したキーワード
+
+    // アクセス処理
     final url = Uri.https('api.github.com', '/search/repositories', {'q': keyword});
     final response = await http.get(url);
     int statuscode = response.statusCode;
+
+    // 検索結果を入れておくもの
     List<RepositoryModel> results = [];
 
     if (statuscode == 200) {
@@ -39,9 +49,11 @@ class RepositorySearchProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  // apiによって返された結果をParseする。
-  // data: apiにより返されたデータの本文
+  //apiによって返された結果をParseする。
   List<RepositoryModel> _parseRepositories(dynamic data) {
+    // data: apiにより返されたデータの本文
+
+    // 検索結果を入れておくもの
     List<RepositoryModel> results = [];
 
     if (data != null && data['items'] != null) {
@@ -54,6 +66,7 @@ class RepositorySearchProvider with ChangeNotifier {
           watchers: item['watchers_count'] ?? 0,
           forks: item['forks_count'] ?? 0,
           issues: item['open_issues_count'] ?? 0,
+          url: item['html_url'] ?? '',
         );
         results.add(repository);
       }

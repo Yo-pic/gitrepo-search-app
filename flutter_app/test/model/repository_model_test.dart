@@ -12,6 +12,7 @@ void main() {
         watchers: 5,
         forks: 3,
         issues: 2,
+        url: 'https://github.com/octocat',
       );
 
       expect(repository.name, 'Sample Repo');
@@ -21,6 +22,7 @@ void main() {
       expect(repository.watchers, 5);
       expect(repository.forks, 3);
       expect(repository.issues, 2);
+      expect(repository.url, 'https://github.com/octocat');
     });
   });
 }

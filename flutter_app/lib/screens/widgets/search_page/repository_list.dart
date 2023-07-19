@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/provider/repository_search_provider.dart';
 import 'package:flutter_app/screens/widgets/search_page/repository_listitem.dart';
 
+/// レポジトリ検索結果をリスト化する
 class RepositoryList extends StatelessWidget {
   final RepositorySearchProvider searchProvider;
 
