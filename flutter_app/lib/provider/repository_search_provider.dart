@@ -7,10 +7,16 @@ class RepositorySearchProvider with ChangeNotifier {
   // apiによる検索結果を保持しておくリスト
   List<RepositoryModel> _searchResults = [];
   List<RepositoryModel> get searchResults => _searchResults;
+  set searchResults(List<RepositoryModel> value) {
+    _searchResults = value;
+  }
 
   // 一度でも検索したかどうかを判定するもの
   bool _isSearched = false;
   bool get isSearched => _isSearched;
+  set isSearched(bool value) {
+    _isSearched = value;
+  }
   // GitHub apiを用いてレポジトリをキーワード検索する
   // keyword: 検索欄に入力したキーワード
   Future<void> searchRepositories(String keyword) async {
@@ -26,7 +32,7 @@ class RepositorySearchProvider with ChangeNotifier {
     }
     else{
       _isSearched = true;
-      throw Exception('Failed to get response. error code is $statuscode\n');
+      //throw Exception('Failed to get response. error code is $statuscode\n');
     }
 
     _searchResults = results;

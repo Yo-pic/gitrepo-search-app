@@ -10,12 +10,8 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider<RepositorySearchProvider>(
-          create: (context) => RepositorySearchProvider(),
-        ),
-      ],
+    return ChangeNotifierProvider(
+      create: (context) => RepositorySearchProvider(),
       child: MaterialApp(
         title: 'GitHub Repository Search',
         theme: ThemeData(
