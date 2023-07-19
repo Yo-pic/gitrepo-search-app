@@ -8,10 +8,14 @@ import 'package:provider/provider.dart';
 /// レポジトリリストの子要素
 class RepositoryListItem extends StatelessWidget{
   final RepositoryModel repositoryModel;
-  const RepositoryListItem({required this.repositoryModel});
+  double? _deviceWidth, _deviceHeight;
+
+  RepositoryListItem({required this.repositoryModel});
 
   @override
   Widget build(BuildContext context) {
+    _deviceWidth = MediaQuery.of(context).size.width;
+    _deviceHeight = MediaQuery.of(context).size.height;
     return ChangeNotifierProvider<RepositoryListItemProvider>(
       create: (_) => RepositoryListItemProvider(),
       child: Consumer<RepositoryListItemProvider>(
@@ -22,11 +26,7 @@ class RepositoryListItem extends StatelessWidget{
     );
   }
 
-  Widget _buildListItem(
-      RepositoryListItemProvider listItemProvider,
-      BuildContext context
-      ){
-
+  Widget _buildListItem(RepositoryListItemProvider listItemProvider, BuildContext context) {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTapDown: (_) {
@@ -64,8 +64,10 @@ class RepositoryListItem extends StatelessWidget{
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Container(
-          width: 360,
-          height: 96,
+          // 360くらい
+          width: _deviceWidth! * 0.92,
+          // 96くらい
+          height: _deviceHeight! * 0.13,
           child: Row(
             // 垂直方向左寄り
             mainAxisAlignment: MainAxisAlignment.start,
@@ -84,10 +86,12 @@ class RepositoryListItem extends StatelessWidget{
 
   /// OwnerIcon窓のwidget
   Widget _ownerImage(RepositoryModel repositoryModel) {
+    // length: Icon窓の一辺の長さ
     // repositoryModel: 検索結果
     return Container(
-      height: 48,
-      width: 48,
+      // 48くらい
+      height: _deviceWidth! * 0.12,
+      width: _deviceWidth! * 0.12,
       decoration: BoxDecoration(
         image: DecorationImage(
           image: NetworkImage(repositoryModel.ownerIconUrl),
@@ -107,7 +111,8 @@ class RepositoryListItem extends StatelessWidget{
         children: [
           Container(
             alignment: Alignment.centerLeft,
-            height: 48,
+            // 48くらい
+            height: _deviceWidth! * 0.12,
             child: Text(
               repositoryModel.name,
               style: const TextStyle(fontSize: 18),
