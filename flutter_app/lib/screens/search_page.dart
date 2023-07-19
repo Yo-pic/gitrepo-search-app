@@ -36,7 +36,7 @@ class SearchPage extends StatelessWidget {
     // レポジトリ検索用プロバイダー
     required RepositorySearchProvider searchProvider,
   }){
-    if(searchResultSum == 0){
+    if(searchResultSum == 0 && searchProvider.isSearched){
       return notFoundRepositoryReport();
     }
     else{
