@@ -15,11 +15,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget{
       elevation: 0.0,
       title: Text(
         title,
-        style: TextStyle(
+        style: const TextStyle(
           color: Colors.black54,
         ),
       ),
-      iconTheme: IconThemeData(
+      iconTheme: const IconThemeData(
         color: Colors.black54,
       ),
       backgroundColor: const Color(0xffebf9ff),

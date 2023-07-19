@@ -54,6 +54,7 @@ class RepositorySearchProvider with ChangeNotifier {
           watchers: item['watchers_count'] ?? 0,
           forks: item['forks_count'] ?? 0,
           issues: item['open_issues_count'] ?? 0,
+          url: item['html_url'] ?? '',
         );
         results.add(repository);
       }

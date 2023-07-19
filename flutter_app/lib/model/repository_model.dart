@@ -6,6 +6,7 @@ class RepositoryModel {
   final int watchers;
   final int forks;
   final int issues;
+  final String url;
 
   RepositoryModel({
     required this.name,
@@ -15,5 +16,6 @@ class RepositoryModel {
     required this.watchers,
     required this.forks,
     required this.issues,
+    required this.url
   });
 }
