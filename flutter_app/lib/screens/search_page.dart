@@ -5,6 +5,8 @@ import 'package:flutter_app/screens/widgets/custom_appbar.dart';
 import 'package:flutter_app/screens/widgets/search_page/repository_list.dart';
 import 'package:flutter_app/screens/widgets/search_page/search_bar.dart';
 
+/// レポジトリ検索用ページ
+/// 検索結果をlist形式で表示する
 class SearchPage extends StatelessWidget {
 
   /// 検索件数が0の時出力されるwidget

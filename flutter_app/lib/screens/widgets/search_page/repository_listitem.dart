@@ -5,7 +5,7 @@ import 'package:flutter_app/provider/repository_listitem_provider.dart';
 import 'package:provider/provider.dart';
 
 
-/// レポジトリリストの子要素
+/// レポジトリリストの子要素を作成する
 class RepositoryListItem extends StatelessWidget{
   final RepositoryModel repositoryModel;
   double? _deviceWidth, _deviceHeight;

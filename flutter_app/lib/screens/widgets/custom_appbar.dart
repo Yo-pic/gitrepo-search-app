@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+/// Appbarコンポーネント
+/// 基本はこのコンポーネントを使用する
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget{
   final String title;
 

@@ -3,6 +3,19 @@ import 'package:flutter_app/model/repository_model.dart';
 import 'package:flutter_app/screens/widgets/custom_appbar.dart';
 import 'package:url_launcher/link.dart';
 
+/// Githubレポジトリ検索アプリの詳細画面
+/// 各レポジトリについて以下の情報を画面に表示する。
+/// * リポジトリ名
+/// * オーナーアイコン
+/// * プロジェクト言語
+/// * Star 数
+/// * Watcher 数
+/// * Fork 数
+/// * Issue 数
+///
+/// 追加機能に実際のレポジトリをwebで見れるようにした。
+///
+///
 class DetailPage extends StatelessWidget {
   final RepositoryModel repository;
   double? _deviceWidth, _deviceHeight;
@@ -11,8 +24,10 @@ class DetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // 現在使用しているデバイスの縦横の長さ
     _deviceWidth = MediaQuery.of(context).size.width;
     _deviceHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       appBar: CustomAppBar(title: repository.name),
       backgroundColor: const Color(0xffebf9ff),
@@ -27,6 +42,7 @@ class DetailPage extends StatelessWidget {
     );
   }
 
+  /// 詳細画面を作成する
   Widget _buildDetailPageWidget() {
     return Column(
       children: [
