@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/model/repository_model.dart';
+import 'package:flutter_app/screens/detail_page.dart';
 import 'package:flutter_app/provider/repository_listitem_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -15,13 +16,16 @@ class RepositoryListItem extends StatelessWidget{
       create: (_) => RepositoryListItemProvider(),
       child: Consumer<RepositoryListItemProvider>(
         builder: (context, listItemProvider, _) {
-          return _buildListItem(listItemProvider);
+          return _buildListItem(listItemProvider, context);
         },
       ),
     );
   }
 
-  Widget _buildListItem(RepositoryListItemProvider listItemProvider){
+  Widget _buildListItem(
+      RepositoryListItemProvider listItemProvider,
+      BuildContext context
+      ){
 
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
@@ -32,13 +36,10 @@ class RepositoryListItem extends StatelessWidget{
         listItemProvider.notPressingListItem();
       },
       onTap: (){
-        // 予定
-        /*
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => DetailPage(repository: searchProvider.searchResults[index]),),);
-
-         */
-        print(repositoryModel.name + ' is onTap');
+            context,
+            MaterialPageRoute(
+            builder: (context) => DetailPage(repository: repositoryModel),),);
       },
       onTapCancel: () {
         listItemProvider.notPressingListItem();
